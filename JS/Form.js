@@ -39,21 +39,23 @@ const validateDate = () => {
     const month = document.querySelector('#month');
     const year = document.querySelector('#year');
 
-    day.addEventListener('input', isValidDate);
-    month.addEventListener('input', isValidDate);
-    year.addEventListener('input', isValidDate);
+    day.addEventListener('input', checkDate);
+    month.addEventListener('input', checkDate);
+    year.addEventListener('input', checkDate);
 
 }
 
-const isValidDate = () => {
+function checkDate() {
+    console.log("checking Date");
     const dateError = document.querySelector('.date-error');
     try {
+        let date = day.value + " " + month.value + " " + year.value;
         (new EmployeePayrollData()).startDate = new Date(Date.parse(date));
-        dateError.textContent = " ";
+        dateError.textContent = "";
     } catch (e) {
         console.error(e);
-        dateError.textContent = e ;
-    } 
+        dateError.textContent = e;
+    }
  }
  const save = () => {
     console.log("Saving....")
@@ -73,6 +75,7 @@ const createEmployeePayroll = () => {
         setTextValue('.text-error', e);
         throw e;
     }
+    employeePayrollData._id = new Date().getTime();
     employeePayrollData._profilePic = getSelectedValues('[name=profile]').pop();
     employeePayrollData._gender = getSelectedValues('[name=gender]').pop();
     employeePayrollData._department = getSelectedValues('[name=department]');
